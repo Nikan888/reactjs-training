@@ -1,10 +1,10 @@
 import React from 'react';
 import './CardHeader.css';
 
-const cardHeader = (props) => {
+const CardHeader = (props) => {
     return (
         <div className="Card-Header">Caption</div>
     );
 };
 
-export default cardHeader;
+export default CardHeader;

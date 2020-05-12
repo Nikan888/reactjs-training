@@ -1,8 +1,12 @@
 import React from 'react';
 import './Header.css';
 
-const header = () => {
-    return <h1 className="Header">Header</h1>
+const Header = () => {
+    return (
+        <header>
+            <h1>Header</h1>
+        </header>
+    );
 };
 
-export default header;
+export default Header;
