@@ -3,7 +3,10 @@ import './CardHeader.css';
 
 const CardHeader = (props) => {
     return (
-        <div className="Card-Header">Caption</div>
+        <div className="Card-Header">
+            <div className="checkbox-position">{props.children}</div>
+            Caption
+        </div>
     );
 };
 
