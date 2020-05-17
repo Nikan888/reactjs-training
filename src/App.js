@@ -9,13 +9,13 @@ import Checkbox from './Card/Checkbox'
 class App extends Component {
   state = {
     checked: false,
-    cardColor: "green"
+    variant: "default"
   }
 
   handleCheckboxChange = event => {
     this.setState({
       checked: event.target.checked,
-      cardColor: event.target.checked ? "red" : "green"
+      variant: event.target.checked ? "checked" : "default"
     })
   }
 
@@ -23,15 +23,17 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Card cardColor={this.state.cardColor}>
-          <CardHeader>
-            <Checkbox
-                checked={this.state.checked}
-                onChange={this.handleCheckboxChange}
-            />
-          </CardHeader>
-          <CardContent />
-        </Card>
+        <div className="wrapper">
+          <Card variant={this.state.variant}>
+            <CardHeader checkbox={<Checkbox
+                  checked={this.state.checked}
+                  onChange={this.handleCheckboxChange}
+                />}
+                text={"Caption"}>
+            </CardHeader>
+            <CardContent text={"Text"}/>
+          </Card>
+        </div>
       </div>
     );
   }

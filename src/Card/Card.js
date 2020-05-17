@@ -2,11 +2,16 @@ import React from 'react';
 import './Card.css';
 
 const Card = (props) => {
+    console.log("Card props")
     console.log(props)
+    let cardColor
+    if (props.variant === "default") {
+        cardColor = "green"
+    } else if (props.variant === "checked") {
+        cardColor = "red"
+    }
     return (
-        <div className="card-wrapper">
-            <div style={{color: props.cardColor}} className="Card">{props.children}</div>
-        </div>
+        <div style={{color: cardColor}} className="Card">{props.children}</div>
     );
 };
 
