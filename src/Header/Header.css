@@ -1,8 +1,8 @@
 header {
-    border: solid #3c33ff;
+  border: solid #3c33ff;
 }
 
 header > h1 {
-    color: #3c33ff;
-    text-align: center;
+  color: #3c33ff;
+  text-align: center;
 }

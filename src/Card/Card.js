@@ -1,12 +1,8 @@
-import React from 'react';
-import './Card.css';
+import React from "react";
+import "./Card.css";
 
 const Card = (props) => {
-    return (
-        <div className="card-wrapper">
-            <div className="Card">{props.children}</div>
-        </div>
-    );
+  return <div className={`Card ${props.variant}`}>{props.children}</div>;
 };
 
 export default Card;
