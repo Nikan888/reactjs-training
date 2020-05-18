@@ -5,17 +5,18 @@ import Card from './Card/Card';
 import CardContent from './Card/CardContent';
 import CardHeader from './Card/CardHeader';
 import Checkbox from './Card/Checkbox'
+import { DEFAULT, CHECKED } from './Card/variant'
 
 class App extends Component {
   state = {
     checked: false,
-    variant: "default"
+    variant: DEFAULT
   }
 
   handleCheckboxChange = event => {
     this.setState({
       checked: event.target.checked,
-      variant: event.target.checked ? "checked" : "default"
+      variant: event.target.checked ? CHECKED : DEFAULT
     })
   }
 
