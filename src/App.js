@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import './App.css';
-import Header from './Header/Header';
-import Card from './Card/Card';
-import CardContent from './Card/CardContent';
-import CardHeader from './Card/CardHeader';
-import Checkbox from './Card/Checkbox'
-import { DEFAULT, CHECKED } from './Card/variant'
+import React, { Component } from "react";
+import "./App.css";
+import Header from "./Header/Header";
+import Card from "./Card/Card";
+import CardContent from "./Card/CardContent";
+import CardHeader from "./Card/CardHeader";
+import Checkbox from "./Card/Checkbox";
+import { DEFAULT, CHECKED } from "./Card/variant";
 
 class App extends Component {
   state = {
     checked: false,
-    variant: DEFAULT
-  }
+    variant: DEFAULT,
+  };
 
-  handleCheckboxChange = event => {
+  handleCheckboxChange = (event) => {
     this.setState({
       checked: event.target.checked,
-      variant: event.target.checked ? CHECKED : DEFAULT
-    })
-  }
+      variant: event.target.checked ? CHECKED : DEFAULT,
+    });
+  };
 
   render() {
     return (
@@ -26,13 +26,16 @@ class App extends Component {
         <Header />
         <div className="wrapper">
           <Card variant={this.state.variant}>
-            <CardHeader checkbox={<Checkbox
+            <CardHeader
+              checkbox={
+                <Checkbox
                   checked={this.state.checked}
                   onChange={this.handleCheckboxChange}
-                />}
-                text={"Caption"}>
-            </CardHeader>
-            <CardContent text={"Text"}/>
+                />
+              }
+              text={"Caption"}
+            ></CardHeader>
+            <CardContent text={"Text"} />
           </Card>
         </div>
       </div>

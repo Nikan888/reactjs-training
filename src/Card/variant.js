@@ -1,2 +1,2 @@
-export const DEFAULT='default';
-export const CHECKED='checked';
+export const DEFAULT = "default";
+export const CHECKED = "checked";

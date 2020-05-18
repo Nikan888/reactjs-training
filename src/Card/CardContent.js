@@ -1,8 +1,8 @@
-import React from 'react';
-import './CardContent.css';
+import React from "react";
+import "./CardContent.css";
 
 const CardContent = (props) => {
-    return <div className="Card-Content">{props.text}</div>
+  return <div className="Card-Content">{props.text}</div>;
 };
 
 export default CardContent;

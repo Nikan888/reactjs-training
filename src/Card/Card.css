@@ -1,5 +1,12 @@
 .Card {
-    border-style: solid;
-    max-height: 40%;
-    max-width: 15%;
+  border-style: solid;
+  max-height: 40%;
+  max-width: 15%;
+}
+.Card.default {
+  color: green;
+}
+
+.Card.checked {
+  color: red;
 }
