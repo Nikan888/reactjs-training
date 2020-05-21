@@ -4,8 +4,19 @@ import "./CardHeader.css";
 const CardHeader = (props) => {
   return (
     <div className="Card-Header">
-      <div className="checkbox-position">{props.checkbox}</div>
-      {props.text}
+      {props.isEdit ? (
+        <div>
+          <input
+            className="card-header-edit"
+            maxLength="20"
+            type="text"
+            value={props.value}
+            onChange={props.onChange}
+          />
+        </div>
+      ) : (
+        props.text
+      )}
     </div>
   );
 };
