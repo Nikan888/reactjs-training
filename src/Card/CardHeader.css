@@ -7,6 +7,11 @@
   text-overflow: ellipsis;
 }
 
+.card-header-edit {
+  width: 95%;
+  height: 20px;
+}
+
 .checkbox-position {
   text-align: right;
 }

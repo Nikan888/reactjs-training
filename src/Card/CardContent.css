@@ -5,3 +5,11 @@
   overflow-wrap: break-word;
   overflow: hidden;
 }
+
+.card-body-edit {
+  width: 95%;
+  height: 100px;
+  resize: none;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}

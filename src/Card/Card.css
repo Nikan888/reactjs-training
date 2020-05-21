@@ -11,16 +11,3 @@
 .Card.checked {
   color: red;
 }
-
-.card-header-edit {
-  width: 95%;
-  height: 20px;
-}
-
-.card-body-edit {
-  width: 95%;
-  height: 200px;
-  resize: none;
-  word-break: break-all;
-  text-overflow: ellipsis;
-}

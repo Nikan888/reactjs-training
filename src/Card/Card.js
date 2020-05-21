@@ -52,12 +52,7 @@ class Card extends Component {
   };
 
   render() {
-    console.log("Card log");
-    console.log(this.state);
-    console.log(this.props);
     let actions;
-    let header;
-    let content;
     let cardVariant = this.state.checked ? CHECKED : DEFAULT;
 
     if (this.state.isEdit) {
@@ -65,26 +60,6 @@ class Card extends Component {
         <div className="actions-position">
           <MdSave onClick={this.saveHandler} />
           <MdCancel onClick={this.cancelHandler} />
-        </div>
-      );
-      header = (
-        <div>
-          <input
-            className="card-header-edit"
-            maxLength="20"
-            type="text"
-            value={this.state.cardHeaderTextBuff}
-            onChange={this.changeCardHeaderHandler}
-          />
-        </div>
-      );
-      content = (
-        <div>
-          <textarea
-            className="card-body-edit"
-            value={this.state.cardContentTextBuff}
-            onChange={this.changeCardContentHandler}
-          />
         </div>
       );
     } else {
@@ -97,16 +72,24 @@ class Card extends Component {
           />
         </div>
       );
-      header = <CardHeader text={this.state.cardHeaderText} />;
-      content = <CardContent text={this.state.cardContentText} />;
     }
 
     return (
       <div className={`Card ${cardVariant}`}>
-        {header}
+        <CardHeader
+          text={this.state.cardHeaderText}
+          isEdit={this.state.isEdit}
+          value={this.state.cardHeaderTextBuff}
+          onChange={this.changeCardHeaderHandler}
+        />
         {actions}
         <hr />
-        {content}
+        <CardContent
+          text={this.state.cardContentText}
+          isEdit={this.state.isEdit}
+          value={this.state.cardContentTextBuff}
+          onChange={this.changeCardContentHandler}
+        />
       </div>
     );
   }
