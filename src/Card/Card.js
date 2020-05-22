@@ -51,45 +51,126 @@ class Card extends Component {
     this.setState({ isEdit: !this.state.isEdit });
   };
 
-  render() {
+  renderCardHeader = () => {
+    let cardHeader = null;
     let actions;
-    let cardVariant = this.state.checked ? CHECKED : DEFAULT;
-
-    if (this.state.isEdit) {
+    if (this.props.modeOnlyView) {
       actions = (
         <div className="actions-position">
-          <MdSave onClick={this.saveHandler} />
-          <MdCancel onClick={this.cancelHandler} />
-        </div>
-      );
-    } else {
-      actions = (
-        <div className="actions-position">
-          <MdEdit onClick={this.editHandler} />
-          <Checkbox
-            checked={this.state.checked}
+          <input
+            type="checkbox"
             onChange={this.checkboxChangeHandler}
+            checked={this.state.checked}
           />
         </div>
       );
+      cardHeader = (
+        <div>
+          <CardHeader
+            text={this.state.cardHeaderText}
+            isEdit={this.state.isEdit}
+            value={this.state.cardHeaderTextBuff}
+            onChange={this.changeCardHeaderHandler}
+          />
+          {actions}
+        </div>
+      );
+    } else {
+      if (this.state.isEdit) {
+        actions = (
+          <div className="actions-position">
+            <MdSave onClick={this.saveHandler} />
+            <MdCancel onClick={this.cancelHandler} />
+          </div>
+        );
+        cardHeader = (
+          <div>
+            <CardHeader
+              text={this.state.cardHeaderText}
+              isEdit={this.state.isEdit}
+              value={this.state.cardHeaderTextBuff}
+              onChange={this.changeCardHeaderHandler}
+            />
+            {actions}
+          </div>
+        );
+      } else {
+        actions = (
+          <div className="actions-position">
+            <MdEdit onClick={this.editHandler} />
+            <Checkbox
+              checked={this.state.checked}
+              onChange={this.checkboxChangeHandler}
+            />
+          </div>
+        );
+        cardHeader = (
+          <div>
+            <CardHeader
+              text={this.state.cardHeaderText}
+              isEdit={this.state.isEdit}
+              value={this.state.cardHeaderTextBuff}
+              onChange={this.changeCardHeaderHandler}
+            />
+            {actions}
+          </div>
+        );
+      }
     }
+    return cardHeader;
+  };
+
+  renderCardBody = () => {
+    let cardBody = null;
+
+    if (this.props.onlyView) {
+      cardBody = (
+        <div>
+          <CardContent
+            text={this.state.cardContentText}
+            isEdit={this.state.isEdit}
+            value={this.state.cardContentTextBuff}
+            onChange={this.changeCardContentHandler}
+          />
+        </div>
+      );
+    } else {
+      if (this.state.isEdit) {
+        cardBody = (
+          <div>
+            <CardContent
+              text={this.state.cardContentText}
+              isEdit={this.state.isEdit}
+              value={this.state.cardContentTextBuff}
+              onChange={this.changeCardContentHandler}
+            />
+          </div>
+        );
+      } else {
+        cardBody = (
+          <div>
+            <CardContent
+              text={this.state.cardContentText}
+              isEdit={this.state.isEdit}
+              value={this.state.cardContentTextBuff}
+              onChange={this.changeCardContentHandler}
+            />
+          </div>
+        );
+      }
+    }
+
+    return cardBody;
+  };
+
+  render() {
+    let cardVariant = this.state.checked ? CHECKED : DEFAULT;
 
     return (
       <div className={`Card ${cardVariant}`}>
-        <CardHeader
-          text={this.state.cardHeaderText}
-          isEdit={this.state.isEdit}
-          value={this.state.cardHeaderTextBuff}
-          onChange={this.changeCardHeaderHandler}
-        />
-        {actions}
+        {this.renderCardHeader()}
         <hr />
-        <CardContent
-          text={this.state.cardContentText}
-          isEdit={this.state.isEdit}
-          value={this.state.cardContentTextBuff}
-          onChange={this.changeCardContentHandler}
-        />
+        {this.renderCardBody()}
       </div>
     );
   }
