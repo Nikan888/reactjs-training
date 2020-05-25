@@ -2,8 +2,8 @@
   border-style: solid;
   max-height: 40%;
   max-width: 15%;
-  margin: 5px;
-  padding: 10px;
+  margin: 0.05rem;
+  padding: 0.1rem;
 }
 
 .Card.default {

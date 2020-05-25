@@ -24,21 +24,6 @@ class Main extends Component {
   };
 
   render() {
-    let cards = null;
-    cards = (
-      <div className="card-wrapper">
-        {this.state.cards.map((card, index) => {
-          return (
-            <Card
-              key={card.id}
-              modeOnlyView={this.state.modeOnlyView}
-              {...card}
-            />
-          );
-        })}
-      </div>
-    );
-
     return (
       <div>
         <div>
@@ -50,7 +35,17 @@ class Main extends Component {
           />
           <label htmlFor="modeOnlyView">View only</label>
         </div>
-        {cards}
+        <div className="card-wrapper">
+          {this.state.cards.map((card, index) => {
+            return (
+              <Card
+                key={card.id}
+                modeOnlyView={this.state.modeOnlyView}
+                {...card}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
