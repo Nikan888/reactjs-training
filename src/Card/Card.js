@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import "./Card.css";
 import CardContent from "./CardContent";
 import CardHeader from "./CardHeader";
-import Checkbox from "./Checkbox";
 import { DEFAULT, CHECKED } from "./variant";
-import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 
 class Card extends Component {
   state = {
@@ -52,27 +50,7 @@ class Card extends Component {
   };
 
   render() {
-    let actions;
     let cardVariant = this.state.checked ? CHECKED : DEFAULT;
-
-    if (this.state.isEdit) {
-      actions = (
-        <div className="actions-position">
-          <MdSave onClick={this.saveHandler} />
-          <MdCancel onClick={this.cancelHandler} />
-        </div>
-      );
-    } else {
-      actions = (
-        <div className="actions-position">
-          <MdEdit onClick={this.editHandler} />
-          <Checkbox
-            checked={this.state.checked}
-            onChange={this.checkboxChangeHandler}
-          />
-        </div>
-      );
-    }
 
     return (
       <div className={`Card ${cardVariant}`}>
@@ -81,15 +59,22 @@ class Card extends Component {
           isEdit={this.state.isEdit}
           value={this.state.cardHeaderTextBuff}
           onChange={this.changeCardHeaderHandler}
+          modeOnlyView={this.props.modeOnlyView}
+          onCheckboxChange={this.checkboxChangeHandler}
+          checkboxChecked={this.state.checked}
+          onSave={this.saveHandler}
+          onCancel={this.cancelHandler}
+          onEdit={this.editHandler}
         />
-        {actions}
         <hr />
-        <CardContent
-          text={this.state.cardContentText}
-          isEdit={this.state.isEdit}
-          value={this.state.cardContentTextBuff}
-          onChange={this.changeCardContentHandler}
-        />
+        <div>
+          <CardContent
+            text={this.state.cardContentText}
+            isEdit={this.state.isEdit}
+            value={this.state.cardContentTextBuff}
+            onChange={this.changeCardContentHandler}
+          />
+        </div>
       </div>
     );
   }

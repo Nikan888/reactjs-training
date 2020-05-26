@@ -1,4 +1,7 @@
 .card-wrapper {
-  margin-left: 20px;
-  margin-top: 50px;
+  margin-left: 0.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
