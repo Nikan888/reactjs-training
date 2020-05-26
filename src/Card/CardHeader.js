@@ -3,38 +3,42 @@ import "./CardHeader.css";
 import Checkbox from "./Checkbox";
 import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 
-const CardHeader = (props) => {
+const renderViewOnlyActions = (props) => {
+  return (
+    <div>
+      <input
+        type="checkbox"
+        onChange={props.onCheckboxChange}
+        checked={props.checkboxChecked}
+      />
+    </div>
+  );
+};
+
+const renderActions = (props) => {
   let actions;
-  if (props.modeOnlyView) {
+  if (props.isEdit) {
     actions = (
       <div>
-        <input
-          type="checkbox"
-          onChange={props.checkboxChange}
-          checked={props.checkboxChecked}
-        />
+        <MdSave onClick={props.onSave} />
+        <MdCancel onClick={props.onCancel} />
       </div>
     );
   } else {
-    if (props.isEdit) {
-      actions = (
-        <div>
-          <MdSave onClick={props.saveHandler} />
-          <MdCancel onClick={props.cancelHandler} />
-        </div>
-      );
-    } else {
-      actions = (
-        <div>
-          <MdEdit onClick={props.editHandler} />
-          <Checkbox
-            checked={props.checkboxChecked}
-            onChange={props.checkboxChange}
-          />
-        </div>
-      );
-    }
+    actions = (
+      <div>
+        <MdEdit onClick={props.onEdit} />
+        <Checkbox
+          checked={props.checkboxChecked}
+          onChange={props.onCheckboxChange}
+        />
+      </div>
+    );
   }
+  return actions;
+};
+
+const CardHeader = (props) => {
   return (
     <div className="Card-Header">
       {props.isEdit ? (
@@ -50,7 +54,7 @@ const CardHeader = (props) => {
       ) : (
         props.text
       )}
-      {actions}
+      {props.modeOnlyView ? renderViewOnlyActions(props) : renderActions(props)}
     </div>
   );
 };

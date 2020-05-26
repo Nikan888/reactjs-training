@@ -60,11 +60,11 @@ class Card extends Component {
           value={this.state.cardHeaderTextBuff}
           onChange={this.changeCardHeaderHandler}
           modeOnlyView={this.props.modeOnlyView}
-          checkboxChange={this.checkboxChangeHandler}
+          onCheckboxChange={this.checkboxChangeHandler}
           checkboxChecked={this.state.checked}
-          saveHandler={this.saveHandler}
-          cancelHandler={this.cancelHandler}
-          editHandler={this.editHandler}
+          onSave={this.saveHandler}
+          onCancel={this.cancelHandler}
+          onEdit={this.editHandler}
         />
         <hr />
         <div>
