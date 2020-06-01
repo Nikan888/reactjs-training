@@ -1,6 +1,18 @@
 import React, { Component } from "react";
 import Card from "../Card/Card";
 import "./Main.css";
+import styled from "styled-components";
+
+const StyledViewOnlyCheckBox = styled.div`
+  margin-top: 10px;
+  width: 100px;
+  border-radius: 5px;
+  &: hover {
+    background: #000000;
+    font-weight: bold;
+    color: white;
+  }
+`;
 
 class Main extends Component {
   state = {
@@ -26,7 +38,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <div>
+        <StyledViewOnlyCheckBox>
           <input
             type="checkbox"
             id="modeOnlyView"
@@ -34,7 +46,7 @@ class Main extends Component {
             onChange={this.OnlyViewCheckBoxHandler}
           />
           <label htmlFor="modeOnlyView">View only</label>
-        </div>
+        </StyledViewOnlyCheckBox>
         <div className="card-wrapper">
           {this.state.cards.map((card, index) => {
             return (
