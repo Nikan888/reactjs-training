@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Card.css";
-import CardContent from "./CardContent";
-import CardHeader from "./CardHeader";
+import CardContent from "./CardContent/CardContent";
+import CardHeader from "./CardHeader/CardHeader";
 import { DEFAULT, CHECKED } from "./variant";
 
 class Card extends Component {
@@ -10,22 +10,21 @@ class Card extends Component {
     isEdit: false,
     cardHeaderText: this.props.headerText,
     cardContentText: this.props.bodyText,
-    cardHeaderTextBuff: "",
-    cardContentTextBuff: "",
+    cardHeaderTextBuff: this.props.headerText,
+    cardContentTextBuff: this.props.bodyText,
   };
 
   checkboxChangeHandler = () => {
     this.setState({
       checked: !this.state.checked,
     });
+    this.props.cardsRecycleBinHandler(this.props.id, !this.state.cbChecked);
   };
 
   editHandler = () => {
     this.setState({
       checked: false,
-      isEdit: !this.state.isEdit,
-      cardHeaderTextBuff: this.state.cardHeaderText,
-      cardContentTextBuff: this.state.cardContentText,
+      isEdit: true,
     });
   };
 
@@ -41,12 +40,18 @@ class Card extends Component {
     this.setState({
       cardHeaderText: this.state.cardHeaderTextBuff,
       cardContentText: this.state.cardContentTextBuff,
-      isEdit: !this.state.isEdit,
+      isEdit: false,
+      checked: false,
     });
   };
 
   cancelHandler = () => {
-    this.setState({ isEdit: !this.state.isEdit });
+    this.setState({
+      cardHeaderTextBuff: this.state.cardHeaderText,
+      cardContentTextBuff: this.state.cardContentText,
+      isEdit: false,
+      checked: false,
+    });
   };
 
   render() {
@@ -67,14 +72,12 @@ class Card extends Component {
           onEdit={this.editHandler}
         />
         <hr />
-        <div>
-          <CardContent
-            text={this.state.cardContentText}
-            isEdit={this.state.isEdit}
-            value={this.state.cardContentTextBuff}
-            onChange={this.changeCardContentHandler}
-          />
-        </div>
+        <CardContent
+          text={this.state.cardContentText}
+          isEdit={this.state.isEdit}
+          value={this.state.cardContentTextBuff}
+          onChange={this.changeCardContentHandler}
+        />
       </div>
     );
   }

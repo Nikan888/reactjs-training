@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Card from "../Card/Card";
-import "./Main.css";
+import "./CardList.css";
 import styled from "styled-components";
 
 const StyledViewOnlyCheckBox = styled.div`
@@ -14,7 +14,7 @@ const StyledViewOnlyCheckBox = styled.div`
   }
 `;
 
-class Main extends Component {
+class CardList extends Component {
   state = {
     cards: [
       { id: "1", headerText: "Header one", bodyText: "Body one" },
@@ -31,28 +31,50 @@ class Main extends Component {
     modeOnlyView: false,
   };
 
+  cardsRecycleBin = [];
+
   OnlyViewCheckBoxHandler = () => {
     this.setState({ modeOnlyView: !this.state.modeOnlyView });
+  };
+
+  cardsRecycleBinHandler = (id, state) => {
+    if (state) {
+      this.cardsRecycleBin.push(id);
+    } else {
+      this.cardsRecycleBin = this.cardsRecycleBin.filter(
+        (value) => value !== id
+      );
+    }
+  };
+
+  removeCardHandler = () => {
+    let cards = [...this.state.cards];
+    cards = cards.filter((value) => !this.cardsRecycleBin.includes(value.id));
+    this.setState({ cards: cards });
   };
 
   render() {
     return (
       <div>
-        <StyledViewOnlyCheckBox>
-          <input
-            type="checkbox"
-            id="modeOnlyView"
-            name="modeOnlyView"
-            onChange={this.OnlyViewCheckBoxHandler}
-          />
-          <label htmlFor="modeOnlyView">View only</label>
-        </StyledViewOnlyCheckBox>
+        <div>
+          <StyledViewOnlyCheckBox>
+            <input
+              type="checkbox"
+              id="modeOnlyView"
+              name="modeOnlyView"
+              onChange={this.OnlyViewCheckBoxHandler}
+            />
+            <label htmlFor="modeOnlyView">View only</label>
+          </StyledViewOnlyCheckBox>
+          <div className="remove-button" onClick={this.removeCardHandler}>Remove card</div>
+        </div>
         <div className="card-wrapper">
           {this.state.cards.map((card, index) => {
             return (
               <Card
                 key={card.id}
                 modeOnlyView={this.state.modeOnlyView}
+                cardsRecycleBinHandler={this.cardsRecycleBinHandler}
                 {...card}
               />
             );
@@ -63,4 +85,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default CardList;
