@@ -1,0 +1,20 @@
+.card-wrapper {
+  margin-left: 0.2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.remove-button {
+  margin-top: 10px;
+  width: 125px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.remove-button:hover {
+  background: #000000;
+  font-weight: bold;
+  color: white;
+}

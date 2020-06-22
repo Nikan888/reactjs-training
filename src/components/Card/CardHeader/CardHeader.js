@@ -1,6 +1,6 @@
 import React from "react";
 import "./CardHeader.css";
-import Checkbox from "./Checkbox";
+import Checkbox from "../Checkbox";
 import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 
 const renderViewOnlyActions = (props) => {
