@@ -37,7 +37,7 @@ class CardList extends Component {
     this.setState({ modeOnlyView: !this.state.modeOnlyView });
   };
 
-  cardsRecycleBinHandler = (id, state) => {
+  cardsRecycleBinHandler = (id) => (state) => {
     if (state) {
       this.cardsRecycleBin.push(id);
     } else {
@@ -49,8 +49,9 @@ class CardList extends Component {
 
   removeCardHandler = () => {
     let cards = [...this.state.cards];
-    cards = cards.filter((value) => !this.cardsRecycleBin.includes(value.id));
-    this.setState({ cards: cards });
+    this.setState({
+      cards: cards.filter((value) => !this.cardsRecycleBin.includes(value.id)),
+    });
   };
 
   render() {
@@ -66,7 +67,9 @@ class CardList extends Component {
             />
             <label htmlFor="modeOnlyView">View only</label>
           </StyledViewOnlyCheckBox>
-          <div className="remove-button" onClick={this.removeCardHandler}>Remove card</div>
+          <button className="remove-button" onClick={this.removeCardHandler}>
+            Remove card
+          </button>
         </div>
         <div className="card-wrapper">
           {this.state.cards.map((card, index) => {
@@ -74,7 +77,7 @@ class CardList extends Component {
               <Card
                 key={card.id}
                 modeOnlyView={this.state.modeOnlyView}
-                cardsRecycleBinHandler={this.cardsRecycleBinHandler}
+                cardsRecycleBinHandler={this.cardsRecycleBinHandler(card.id)}
                 {...card}
               />
             );
