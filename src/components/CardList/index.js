@@ -54,6 +54,18 @@ class CardList extends Component {
     });
   };
 
+  addCardHandler = () => {
+    let cards = [...this.state.cards];
+    cards.push({
+      id:
+        cards[cards.length - 1].id.slice(0, 2) +
+        (+cards[cards.length - 1].id.slice(2, 3) + 1),
+      headerText: "New Card",
+      bodyText: "New Card Body",
+    });
+    this.setState({ cards: cards });
+  };
+
   render() {
     return (
       <div>
@@ -69,6 +81,9 @@ class CardList extends Component {
           </StyledViewOnlyCheckBox>
           <button className="remove-button" onClick={this.removeCardHandler}>
             Remove card
+          </button>
+          <button className="add-button" onClick={this.addCardHandler}>
+            Add card
           </button>
         </div>
         <div className="card-wrapper">
