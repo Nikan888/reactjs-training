@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Card from "../Card/Card";
 import "./CardList.css";
 import styled from "styled-components";
+import { v4 as uuidv4 } from 'uuid';
 
 const StyledViewOnlyCheckBox = styled.div`
   margin-top: 10px;
@@ -55,15 +56,16 @@ class CardList extends Component {
   };
 
   addCardHandler = () => {
-    let cards = [...this.state.cards];
-    cards.push({
-      id:
-        cards[cards.length - 1].id.slice(0, 2) +
-        (+cards[cards.length - 1].id.slice(2, 3) + 1),
-      headerText: "New Card",
-      bodyText: "New Card Body",
+    this.setState({
+      cards: [
+        ...this.state.cards,
+        {
+          id: uuidv4(),
+          headerText: "New Card",
+          bodyText: "New Card Body",
+        },
+      ],
     });
-    this.setState({ cards: cards });
   };
 
   render() {
