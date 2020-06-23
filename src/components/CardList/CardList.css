@@ -18,3 +18,16 @@
   font-weight: bold;
   color: white;
 }
+
+.add-button {
+  margin-top: 10px;
+  width: 125px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.add-button:hover {
+  background: #000000;
+  font-weight: bold;
+  color: white;
+}
