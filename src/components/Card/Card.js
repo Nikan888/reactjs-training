@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./Card.css";
-import CardContent from "./CardContent/CardContent";
-import CardHeader from "./CardHeader/CardHeader";
+import CardContent from "./CardContent";
+import CardHeader from "./CardHeader";
 import { DEFAULT, CHECKED } from "./variant";
+import withLoadingDelay from "../../hoc/withLoadingDelay";
 
 class Card extends Component {
   state = {
@@ -83,4 +84,4 @@ class Card extends Component {
   }
 }
 
-export default Card;
+export default withLoadingDelay(Card);
