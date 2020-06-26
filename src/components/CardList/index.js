@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Card from "../Card/Card";
 import "./CardList.css";
 import styled from "styled-components";
-import { v4 as uuidv4 } from 'uuid';
+import { CardContextConsumer } from "../../context/Context";
 
 const StyledViewOnlyCheckBox = styled.div`
   margin-top: 10px;
@@ -16,89 +16,51 @@ const StyledViewOnlyCheckBox = styled.div`
 `;
 
 class CardList extends Component {
-  state = {
-    cards: [
-      { id: "1", headerText: "Header one", bodyText: "Body one" },
-      { id: "2", headerText: "Header two", bodyText: "Body two" },
-      { id: "3", headerText: "Header three", bodyText: "Body three" },
-      { id: "4", headerText: "Header four", bodyText: "Body four" },
-      { id: "5", headerText: "Header five", bodyText: "Body five" },
-      { id: "6", headerText: "Header six", bodyText: "Body six" },
-      { id: "7", headerText: "Header seven", bodyText: "Body seven" },
-      { id: "8", headerText: "Header eight", bodyText: "Body eight" },
-      { id: "9", headerText: "Header nine", bodyText: "Body nine" },
-      { id: "10", headerText: "Header ten", bodyText: "Body ten" },
-    ],
-    modeOnlyView: false,
-  };
-
-  cardsRecycleBin = [];
-
-  OnlyViewCheckBoxHandler = () => {
-    this.setState({ modeOnlyView: !this.state.modeOnlyView });
-  };
-
-  cardsRecycleBinHandler = (id) => (state) => {
-    if (state) {
-      this.cardsRecycleBin.push(id);
-    } else {
-      this.cardsRecycleBin = this.cardsRecycleBin.filter(
-        (value) => value !== id
-      );
-    }
-  };
-
-  removeCardHandler = () => {
-    let cards = [...this.state.cards];
-    this.setState({
-      cards: cards.filter((value) => !this.cardsRecycleBin.includes(value.id)),
-    });
-  };
-
-  addCardHandler = () => {
-    this.setState({
-      cards: [
-        ...this.state.cards,
-        {
-          id: uuidv4(),
-          headerText: "New Card",
-          bodyText: "New Card Body",
-        },
-      ],
-    });
-  };
-
   render() {
     return (
       <div>
-        <div>
-          <StyledViewOnlyCheckBox>
-            <input
-              type="checkbox"
-              id="modeOnlyView"
-              name="modeOnlyView"
-              onChange={this.OnlyViewCheckBoxHandler}
-            />
-            <label htmlFor="modeOnlyView">View only</label>
-          </StyledViewOnlyCheckBox>
-          <button className="remove-button" onClick={this.removeCardHandler}>
-            Remove card
-          </button>
-          <button className="add-button" onClick={this.addCardHandler}>
-            Add card
-          </button>
-        </div>
+        <CardContextConsumer>
+          {(context) => (
+            <div>
+              <StyledViewOnlyCheckBox>
+                <input
+                  type="checkbox"
+                  id="modeOnlyView"
+                  name="modeOnlyView"
+                  onChange={context.OnlyViewCheckBoxHandler}
+                />
+                <label htmlFor="modeOnlyView">View only</label>
+              </StyledViewOnlyCheckBox>
+              <button
+                className="remove-button"
+                onClick={context.removeCardHandler}
+              >
+                Remove card
+              </button>
+              <button className="add-button" onClick={context.addCardHandler}>
+                Add card
+              </button>
+            </div>
+          )}
+        </CardContextConsumer>
+
         <div className="card-wrapper">
-          {this.state.cards.map((card, index) => {
-            return (
-              <Card
-                key={card.id}
-                modeOnlyView={this.state.modeOnlyView}
-                cardsRecycleBinHandler={this.cardsRecycleBinHandler(card.id)}
-                {...card}
-              />
-            );
-          })}
+          <CardContextConsumer>
+            {(context) =>
+              context.cards.map((card, index) => {
+                return (
+                  <Card
+                    key={card.id}
+                    modeOnlyView={context.modeOnlyView}
+                    cardsRecycleBinHandler={context.cardsRecycleBinHandler(
+                      card.id
+                    )}
+                    {...card}
+                  />
+                );
+              })
+            }
+          </CardContextConsumer>
         </div>
       </div>
     );
