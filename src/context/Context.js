@@ -37,9 +37,8 @@ class CardContextProvider extends Component {
   };
 
   removeCardHandler = () => {
-    let cards = [...this.state.cards];
     this.setState({
-      cards: cards.filter((value) => !this.cardsRecycleBin.includes(value.id)),
+      cards: [...this.state.cards].filter((value) => !this.cardsRecycleBin.includes(value.id)),
     });
   };
 
