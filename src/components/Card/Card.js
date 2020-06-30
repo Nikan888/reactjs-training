@@ -4,6 +4,7 @@ import CardContent from "./CardContent";
 import CardHeader from "./CardHeader";
 import { DEFAULT, CHECKED } from "./variant";
 import withLoadingDelay from "../../hoc/withLoadingDelay";
+import PropTypes from "prop-types";
 
 class Card extends Component {
   state = {
@@ -19,7 +20,7 @@ class Card extends Component {
     this.setState({
       checked: !this.state.checked,
     });
-    this.props.cardsRecycleBinHandler(this.props.id, !this.state.cbChecked);
+    this.props.cardsRecycleBinHandler(this.props.id, !this.state.checked);
   };
 
   editHandler = () => {
@@ -83,5 +84,21 @@ class Card extends Component {
     );
   }
 }
+
+Card.propTypes = {
+  modeOnlyView: PropTypes.bool,
+  isEdit: PropTypes.bool,
+  checked: PropTypes.bool,
+  changeCardHeaderHandler: PropTypes.func,
+  editHandler: PropTypes.func,
+  cancelHandler: PropTypes.func,
+  saveHandler: PropTypes.func,
+  checkboxChangeHandler: PropTypes.func,
+  changeCardContentHandler: PropTypes.func,
+  headerText: PropTypes.string,
+  bodyText: PropTypes.string,
+  headerTextTemp: PropTypes.string,
+  bodyTextTemp: PropTypes.string,
+};
 
 export default withLoadingDelay(Card);
