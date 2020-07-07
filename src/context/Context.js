@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const { Provider, Consumer } = React.createContext();
 
 class CardContextProvider extends Component {
   state = {
-    cards: [
-      { id: "1", headerText: "Header one", bodyText: "Body one" },
-      { id: "2", headerText: "Header two", bodyText: "Body two" },
-      { id: "3", headerText: "Header three", bodyText: "Body three" },
-      { id: "4", headerText: "Header four", bodyText: "Body four" },
-      { id: "5", headerText: "Header five", bodyText: "Body five" },
-      { id: "6", headerText: "Header six", bodyText: "Body six" },
-      { id: "7", headerText: "Header seven", bodyText: "Body seven" },
-      { id: "8", headerText: "Header eight", bodyText: "Body eight" },
-      { id: "9", headerText: "Header nine", bodyText: "Body nine" },
-      { id: "10", headerText: "Header ten", bodyText: "Body ten" },
-    ],
+    cards: [],
     modeOnlyView: false,
   };
 
@@ -38,7 +28,9 @@ class CardContextProvider extends Component {
 
   removeCardHandler = () => {
     this.setState({
-      cards: [...this.state.cards].filter((value) => !this.cardsRecycleBin.includes(value.id)),
+      cards: [...this.state.cards].filter(
+        (value) => !this.cardsRecycleBin.includes(value.id)
+      ),
     });
   };
 
@@ -54,6 +46,24 @@ class CardContextProvider extends Component {
       ],
     });
   };
+
+  componentDidMount() {
+    axios
+      .get(
+        "https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json"
+      )
+      .then((response) => {
+        const cards = response.data.slice(0, 15).map((row) => ({
+          id: uuidv4(),
+          headerText: row.Name,
+          bodyText: row.About,
+        }));
+        this.setState({ cards });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   render() {
     return (
