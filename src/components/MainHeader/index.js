@@ -1,10 +1,17 @@
 import React from "react";
 import "./MainHeader.css";
 import { CardContextConsumer } from "../../context/Context";
+import { Link } from "react-router-dom";
 
 const MainHeader = () => {
   return (
     <header>
+      <div>
+        <Link to="/">Home</Link>
+      </div>
+      <div>
+        <Link to="/auth">Sign in</Link>
+      </div>
       <CardContextConsumer>
         {(context) => (
           <button type="button" className="cardsCounter">
