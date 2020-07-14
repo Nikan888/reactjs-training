@@ -47,6 +47,18 @@ class CardContextProvider extends Component {
     });
   };
 
+  updateCardHandler = (id) => (header, body) => {
+    const cards = this.state.cards;
+    cards.map((card) => {
+      if (card.id === id) {
+        card.headerText = header;
+        card.bodyText = body;
+      }
+      return card;
+    });
+    this.setState({ cards });
+  };
+
   componentDidMount() {
     axios
       .get(
@@ -76,6 +88,7 @@ class CardContextProvider extends Component {
           removeCardHandler: this.removeCardHandler,
           cardsRecycleBinHandler: this.cardsRecycleBinHandler,
           OnlyViewCheckBoxHandler: this.OnlyViewCheckBoxHandler,
+          updateCardHandler: this.updateCardHandler,
         }}
       >
         {this.props.children}

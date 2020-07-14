@@ -45,6 +45,10 @@ class Card extends Component {
       isEdit: false,
       checked: false,
     });
+    this.props.onSave(
+      this.state.cardHeaderTextBuff,
+      this.state.cardContentTextBuff
+    );
   };
 
   cancelHandler = () => {
@@ -58,7 +62,6 @@ class Card extends Component {
 
   render() {
     let cardVariant = this.state.checked ? CHECKED : DEFAULT;
-
     return (
       <div className={`Card ${cardVariant}`}>
         <CardHeader

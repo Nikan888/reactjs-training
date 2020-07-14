@@ -47,7 +47,7 @@ class CardList extends Component {
         <div className="card-wrapper">
           <CardContextConsumer>
             {(context) =>
-              context.cards.map((card, index) => {
+              context.cards.map((card) => {
                 return (
                   <Card
                     key={card.id}
@@ -55,6 +55,7 @@ class CardList extends Component {
                     cardsRecycleBinHandler={context.cardsRecycleBinHandler(
                       card.id
                     )}
+                    onSave={context.updateCardHandler(card.id)}
                     {...card}
                   />
                 );
