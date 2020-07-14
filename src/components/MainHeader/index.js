@@ -1,7 +1,7 @@
 import React from "react";
 import "./MainHeader.css";
 import { CardContextConsumer } from "../../context/Context";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 const MainHeader = () => {
   return (
@@ -24,4 +24,4 @@ const MainHeader = () => {
   );
 };
 
-export default MainHeader;
+export default withRouter(MainHeader);
