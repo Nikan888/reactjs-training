@@ -2,7 +2,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCard } from "../../store/actions";
-import TextInput from "../TextInput";
 import "./SingleCard.css";
 import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 
@@ -15,7 +14,6 @@ const SingleCard = () => {
   console.log("card");
   console.log(card);
   const [isEditMode, setEditMode] = React.useState(false);
-  const [isDisabled, setDisabled] = React.useState(false);
   const dispatch = useDispatch();
 
   const [values, setValues] = React.useState({
