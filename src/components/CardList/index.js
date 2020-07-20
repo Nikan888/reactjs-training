@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Card from "../Card/Card";
 import "./CardList.css";
 import styled from "styled-components";
-import { CardContextConsumer } from "../../context/Context";
+import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+import { addCard, removeCards } from "../../store/actions";
 
 const StyledViewOnlyCheckBox = styled.div`
   margin-top: 10px;
@@ -15,57 +17,68 @@ const StyledViewOnlyCheckBox = styled.div`
   }
 `;
 
-class CardList extends Component {
-  render() {
-    return (
-      <div>
-        <CardContextConsumer>
-          {(context) => (
-            <div>
-              <StyledViewOnlyCheckBox>
-                <input
-                  type="checkbox"
-                  id="modeOnlyView"
-                  name="modeOnlyView"
-                  onChange={context.OnlyViewCheckBoxHandler}
-                />
-                <label htmlFor="modeOnlyView">View only</label>
-              </StyledViewOnlyCheckBox>
-              <button
-                className="remove-button"
-                onClick={context.removeCardHandler}
-              >
-                Remove card
-              </button>
-              <button className="add-button" onClick={context.addCardHandler}>
-                Add card
-              </button>
-            </div>
-          )}
-        </CardContextConsumer>
+const CardList = () => {
+  const [onlyViewMode, setOnlyViewMode] = React.useState(false);
+  const cards = useSelector((state) => state.cards);
+  const dispatch = useDispatch();
 
-        <div className="card-wrapper">
-          <CardContextConsumer>
-            {(context) =>
-              context.cards.map((card) => {
-                return (
-                  <Card
-                    key={card.id}
-                    modeOnlyView={context.modeOnlyView}
-                    cardsRecycleBinHandler={context.cardsRecycleBinHandler(
-                      card.id
-                    )}
-                    onSave={context.updateCardHandler(card.id)}
-                    {...card}
-                  />
-                );
-              })
-            }
-          </CardContextConsumer>
-        </div>
+  const cardsRecycleBin = [];
+
+  const cardsRecycleBinHandler = (id) => (state) => {
+    const index = cardsRecycleBin.indexOf(id);
+    if (index === -1) {
+      cardsRecycleBin.push(id);
+    } else {
+      cardsRecycleBin.splice(cardsRecycleBin.indexOf(id), 1);
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <StyledViewOnlyCheckBox>
+          <input
+            type="checkbox"
+            id="modeOnlyView"
+            name="modeOnlyView"
+            onChange={() => setOnlyViewMode(!onlyViewMode)}
+          />
+          <label htmlFor="modeOnlyView">View only</label>
+        </StyledViewOnlyCheckBox>
+        <button
+          className="remove-button"
+          onClick={() => {
+            dispatch(removeCards(cardsRecycleBin));
+          }}
+        >
+          Remove selected cards
+        </button>
+        <button
+          className="add-button"
+          onClick={() => {
+            dispatch(addCard(uuidv4(), "New Card", "New Body"));
+          }}
+        >
+          Add card
+        </button>
       </div>
-    );
-  }
-}
+
+      <div className="card-wrapper">
+        {cards.map((card) => {
+          return (
+            <Card
+              key={card.id}
+              id={card.id}
+              modeOnlyView={onlyViewMode}
+              cardsRecycleBinHandler={cardsRecycleBinHandler(card.id)}
+              headerText={card.headerText}
+              bodyText={card.bodyText}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default CardList;

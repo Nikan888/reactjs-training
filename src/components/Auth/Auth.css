@@ -1,3 +1,12 @@
 .button:disabled {
   background: grey;
 }
+
+.auth-block {
+  margin: 5px;
+}
+
+.auth-sign-button {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+}

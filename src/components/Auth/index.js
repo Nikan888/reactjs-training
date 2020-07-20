@@ -16,7 +16,7 @@ const Auth = () => {
   };
 
   return (
-    <div>
+    <div className="auth-block">
       <TextInput
         onChange={changeHandler("email")}
         requiredValidation
@@ -33,7 +33,7 @@ const Auth = () => {
       >
         Password:{" "}
       </TextInput>
-      <Link to="/">
+      <Link to="/" className="auth-sign-button">
         <button disabled={isDisabledEmail || isDisabledPassword}>
           Sign in
         </button>

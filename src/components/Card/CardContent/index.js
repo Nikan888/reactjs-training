@@ -4,11 +4,11 @@ import "./CardContent.css";
 const CardContent = (props) => {
   return (
     <div className="Card-Content">
-      {props.isEdit ? (
+      {props.isEditMode ? (
         <div>
           <textarea
             className="card-body-edit"
-            value={props.value}
+            value={props.text}
             onChange={props.onChange}
           />
         </div>
