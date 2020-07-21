@@ -7,12 +7,8 @@ import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 
 const SingleCard = () => {
   const { id } = useParams();
-  console.log("id");
-  console.log(id);
   const card =
     useSelector((state) => state.cards.find((card) => card.id === id)) || {};
-  console.log("card");
-  console.log(card);
   const [isEditMode, setEditMode] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -86,9 +82,6 @@ const SingleCard = () => {
     }
     return <div>{body}</div>;
   };
-
-  console.log("isEditMode");
-  console.log(isEditMode);
 
   return (
     <div className="single-card">
