@@ -1,13 +1,10 @@
 import React from "react";
-import "./MainHeader.css";
-import { Link, withRouter } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { initializeCards } from "../../store/actions";
 import { v4 as uuidv4 } from "uuid";
 
-const MainHeader = () => {
-  const cards = useSelector((state) => state.cards);
+const ContentLoader = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -31,20 +28,7 @@ const MainHeader = () => {
       });
   }, []);
 
-  return (
-    <header>
-      <button className="link-button">
-        <Link to="/" className="badge">Home</Link>
-      </button>
-      <button className="link-button">
-        <Link to="/auth" className="badge">Sign in</Link>
-      </button>
-      <button className="cardsCounter">
-        Cards count: <span className="badge">{cards.length}</span>
-      </button>
-      <h1>Header</h1>
-    </header>
-  );
+  return <div>{props.children}</div>;
 };
 
-export default withRouter(MainHeader);
+export default ContentLoader;

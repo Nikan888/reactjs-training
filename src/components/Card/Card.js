@@ -1,96 +1,85 @@
-import React, { Component } from "react";
+import React from "react";
 import "./Card.css";
 import CardContent from "./CardContent";
 import CardHeader from "./CardHeader";
 import { DEFAULT, CHECKED } from "./variant";
 import withLoadingDelay from "../../hoc/withLoadingDelay";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateCard } from "../../store/actions";
 
-class Card extends Component {
-  state = {
-    checked: false,
-    isEdit: false,
-    cardHeaderText: this.props.headerText,
-    cardContentText: this.props.bodyText,
-    cardHeaderTextBuff: this.props.headerText,
-    cardContentTextBuff: this.props.bodyText,
+const Card = (props) => {
+  const [checked, setChecked] = React.useState(false);
+  const [isEditMode, setEditMode] = React.useState(false);
+  const [values, setValues] = React.useState({
+    cardHeaderText: props.headerText,
+    cardContentText: props.bodyText,
+  });
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const checkboxChangeHandler = () => {
+    setChecked(!checked);
+    props.cardsRecycleBinHandler(props.id);
   };
 
-  checkboxChangeHandler = () => {
-    this.setState({
-      checked: !this.state.checked,
+  const editHandler = () => {
+    setChecked(false);
+    setEditMode(true);
+  };
+
+  const changeHandler = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const cancelHandler = () => {
+    setValues({
+      cardHeaderText: props.headerText,
+      cardContentText: props.bodyText,
     });
-    this.props.cardsRecycleBinHandler(this.props.id, !this.state.checked);
+    setEditMode(false);
   };
 
-  editHandler = () => {
-    this.setState({
-      checked: false,
-      isEdit: true,
-    });
-  };
-
-  changeCardHeaderHandler = (event) => {
-    this.setState({ cardHeaderTextBuff: event.target.value });
-  };
-
-  changeCardContentHandler = (event) => {
-    this.setState({ cardContentTextBuff: event.target.value });
-  };
-
-  saveHandler = () => {
-    this.setState({
-      cardHeaderText: this.state.cardHeaderTextBuff,
-      cardContentText: this.state.cardContentTextBuff,
-      isEdit: false,
-      checked: false,
-    });
-    this.props.onSave(
-      this.state.cardHeaderTextBuff,
-      this.state.cardContentTextBuff
-    );
-  };
-
-  cancelHandler = () => {
-    this.setState({
-      cardHeaderTextBuff: this.state.cardHeaderText,
-      cardContentTextBuff: this.state.cardContentText,
-      isEdit: false,
-      checked: false,
-    });
-  };
-
-  render() {
-    let cardVariant = this.state.checked ? CHECKED : DEFAULT;
-    return (
-      <div className={`Card ${cardVariant}`}>
-        <CardHeader
-          text={this.state.cardHeaderText}
-          isEdit={this.state.isEdit}
-          value={this.state.cardHeaderTextBuff}
-          onChange={this.changeCardHeaderHandler}
-          modeOnlyView={this.props.modeOnlyView}
-          onCheckboxChange={this.checkboxChangeHandler}
-          checkboxChecked={this.state.checked}
-          onSave={this.saveHandler}
-          onCancel={this.cancelHandler}
-          onEdit={this.editHandler}
-        />
-        <hr />
-        <CardContent
-          text={this.state.cardContentText}
-          isEdit={this.state.isEdit}
-          value={this.state.cardContentTextBuff}
-          onChange={this.changeCardContentHandler}
-        />
-      </div>
-    );
-  }
-}
+  let cardVariant = checked ? CHECKED : DEFAULT;
+  return (
+    <div
+      className={`Card ${cardVariant}`}
+      onDoubleClick={() => {
+        if (!isEditMode) {
+          history.push(`/card/${props.id}`);
+        }
+      }}
+    >
+      <CardHeader
+        header={values.cardHeaderText}
+        isEditMode={isEditMode}
+        onChange={changeHandler("cardHeaderText")}
+        modeOnlyView={props.modeOnlyView}
+        onCheckboxChange={checkboxChangeHandler}
+        checkboxChecked={checked}
+        onSave={() => {
+          dispatch(
+            updateCard(props.id, values.cardHeaderText, values.cardContentText)
+          );
+          setEditMode(false);
+        }}
+        onCancel={cancelHandler}
+        onEdit={editHandler}
+      />
+      <hr />
+      <CardContent
+        text={values.cardContentText}
+        isEditMode={isEditMode}
+        onChange={changeHandler("cardContentText")}
+      />
+    </div>
+  );
+};
 
 Card.propTypes = {
   modeOnlyView: PropTypes.bool,
-  isEdit: PropTypes.bool,
+  isEditMode: PropTypes.bool,
   checked: PropTypes.bool,
   changeCardHeaderHandler: PropTypes.func,
   editHandler: PropTypes.func,

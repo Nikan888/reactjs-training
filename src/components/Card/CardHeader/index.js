@@ -17,7 +17,7 @@ const renderViewOnlyActions = (props) => {
 
 const renderActions = (props) => {
   let actions;
-  if (props.isEdit) {
+  if (props.isEditMode) {
     actions = (
       <div>
         <MdSave onClick={props.onSave} />
@@ -41,18 +41,18 @@ const renderActions = (props) => {
 const CardHeader = (props) => {
   return (
     <div className="Card-Header">
-      {props.isEdit ? (
+      {props.isEditMode ? (
         <div>
           <input
             className="card-header-edit"
             maxLength="20"
             type="text"
-            value={props.value}
+            value={props.header}
             onChange={props.onChange}
           />
         </div>
       ) : (
-        props.text
+        props.header
       )}
       {props.modeOnlyView ? renderViewOnlyActions(props) : renderActions(props)}
     </div>

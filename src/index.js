@@ -3,12 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./containers/App";
 import registerServiceWorker from "./registerServiceWorker";
-import { CardContextProvider } from "./context/Context";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./store/reducer";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <CardContextProvider>
+  <Provider store={store}>
     <App />
-  </CardContextProvider>,
+  </Provider>,
   document.getElementById("root")
 );
 registerServiceWorker();

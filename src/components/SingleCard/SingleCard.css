@@ -1,0 +1,26 @@
+.single-card {
+  margin: 5px;
+  border-style: solid;
+  color: green;
+}
+
+.single-card-header {
+  margin: 5px;
+}
+
+.single-card-header-edit {
+  width: 95%;
+  height: 20px;
+}
+
+.single-card-body {
+  margin: 5px;
+}
+
+.single-card-body-edit {
+  width: 95%;
+  height: 100px;
+  resize: none;
+  word-break: break-all;
+  text-overflow: ellipsis;
+}
