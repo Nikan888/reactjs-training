@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Auth.css";
 import TextInput from "../TextInput";
+import { logIn } from "../../store/actions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const Auth = () => {
   const [values, setValues] = React.useState({
@@ -10,6 +13,8 @@ const Auth = () => {
   });
   const [isDisabledEmail, setDisabledEmail] = React.useState(false);
   const [isDisabledPassword, setDisabledPassword] = React.useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const changeHandler = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -34,7 +39,13 @@ const Auth = () => {
         Password:{" "}
       </TextInput>
       <Link to="/" className="auth-sign-button">
-        <button disabled={isDisabledEmail || isDisabledPassword}>
+        <button
+          onClick={() => {
+            dispatch(logIn(values.email, values.password));
+            history.push("/");
+          }}
+          disabled={isDisabledEmail || isDisabledPassword}
+        >
           Sign in
         </button>
       </Link>

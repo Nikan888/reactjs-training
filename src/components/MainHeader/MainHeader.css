@@ -6,3 +6,7 @@ header > h1 {
   color: #3c33ff;
   text-align: center;
 }
+
+.welcome-block {
+  margin: 5px;
+}
