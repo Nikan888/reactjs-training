@@ -14,11 +14,6 @@ const SingleCard = () => {
   const [isEditMode, setEditMode] = React.useState(false);
   const dispatch = useDispatch();
 
-  //TODO: remove comments
-  /*const isModeOnlyView = localStorage.getItem("modeOnlyView")
-    ? JSON.parse(localStorage.getItem("modeOnlyView"))
-    : false;*/
-
   const isModeOnlyView = useSelector((state) => state.cardReducer.modeOnlyView);
 
   const [values, setValues] = React.useState({
@@ -69,6 +64,8 @@ const SingleCard = () => {
         header = <div>{headerText}</div>;
         actions = <MdEdit onClick={editHandler} />;
       }
+    } else {
+      header = <div>{headerText}</div>;
     }
     return (
       <div>
@@ -92,6 +89,8 @@ const SingleCard = () => {
       } else {
         body = <div>{bodyText}</div>;
       }
+    } else {
+      body = <div>{bodyText}</div>;
     }
     return <div>{body}</div>;
   };

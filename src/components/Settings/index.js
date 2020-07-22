@@ -17,13 +17,6 @@ const StyledViewOnlyCheckBox = styled.div`
 const Settings = () => {
   const isModeOnlyView = useSelector((state) => state.cardReducer.modeOnlyView);
 
-  //TODO: remove comments
-  /*const [isModeOnlyView, setModeOnlyView] = React.useState(
-    localStorage.getItem("modeOnlyView")
-      ? JSON.parse(localStorage.getItem("modeOnlyView"))
-      : false
-  );*/
-
   const dispatch = useDispatch();
   return (
     <div>
@@ -33,14 +26,6 @@ const Settings = () => {
           id="isModeOnlyView"
           name="isModeOnlyView"
           onChange={() => {
-            //TODO: remove comments
-            /*localStorage.setItem(
-              "modeOnlyView",
-              JSON.stringify(!isModeOnlyView)
-            );*/
-            //setModeOnlyView(!isModeOnlyView);
-            //window.location.reload(false);
-
             dispatch(changeMode());
           }}
           checked={isModeOnlyView}

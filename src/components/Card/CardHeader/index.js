@@ -4,11 +4,6 @@ import Checkbox from "../Checkbox";
 import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-//TODO: remove comments
-/*const isModeOnlyView = localStorage.getItem("modeOnlyView")
-  ? JSON.parse(localStorage.getItem("modeOnlyView"))
-  : false;*/
-
 const renderViewOnlyActions = (props) => {
   return (
     <div>
