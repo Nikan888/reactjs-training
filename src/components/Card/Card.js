@@ -55,7 +55,6 @@ const Card = (props) => {
         header={values.cardHeaderText}
         isEditMode={isEditMode}
         onChange={changeHandler("cardHeaderText")}
-        modeOnlyView={props.modeOnlyView}
         onCheckboxChange={checkboxChangeHandler}
         checkboxChecked={checked}
         onSave={() => {
@@ -78,7 +77,6 @@ const Card = (props) => {
 };
 
 Card.propTypes = {
-  modeOnlyView: PropTypes.bool,
   isEditMode: PropTypes.bool,
   checked: PropTypes.bool,
   changeCardHeaderHandler: PropTypes.func,

@@ -2,6 +2,7 @@ import React from "react";
 import "./CardHeader.css";
 import Checkbox from "../Checkbox";
 import { MdSave, MdCancel, MdEdit } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const renderViewOnlyActions = (props) => {
   return (
@@ -39,6 +40,7 @@ const renderActions = (props) => {
 };
 
 const CardHeader = (props) => {
+  const isModeOnlyView = useSelector((state) => state.cardReducer.modeOnlyView);
   return (
     <div className="Card-Header">
       {props.isEditMode ? (
@@ -54,7 +56,7 @@ const CardHeader = (props) => {
       ) : (
         props.header
       )}
-      {props.modeOnlyView ? renderViewOnlyActions(props) : renderActions(props)}
+      {isModeOnlyView ? renderViewOnlyActions(props) : renderActions(props)}
     </div>
   );
 };

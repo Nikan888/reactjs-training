@@ -8,9 +8,13 @@ import { MdSave, MdCancel, MdEdit } from "react-icons/md";
 const SingleCard = () => {
   const { id } = useParams();
   const card =
-    useSelector((state) => state.cards.find((card) => card.id === id)) || {};
+    useSelector((state) =>
+      state.cardReducer.cards.find((card) => card.id === id)
+    ) || {};
   const [isEditMode, setEditMode] = React.useState(false);
   const dispatch = useDispatch();
+
+  const isModeOnlyView = useSelector((state) => state.cardReducer.modeOnlyView);
 
   const [values, setValues] = React.useState({
     headerText: card.headerText,
@@ -35,29 +39,33 @@ const SingleCard = () => {
 
   const renderHeader = (headerText) => {
     let header, actions;
-    if (isEditMode) {
-      header = (
-        <input
-          className="single-card-header-edit"
-          type="text"
-          value={headerText}
-          onChange={changeHandler("headerText")}
-        />
-      );
-      actions = (
-        <div>
-          <MdSave
-            onClick={() => {
-              dispatch(updateCard(id, values.headerText, values.bodyText));
-              setEditMode(false);
-            }}
+    if (!isModeOnlyView) {
+      if (isEditMode) {
+        header = (
+          <input
+            className="single-card-header-edit"
+            type="text"
+            value={headerText}
+            onChange={changeHandler("headerText")}
           />
-          <MdCancel onClick={cancelHandler} />
-        </div>
-      );
+        );
+        actions = (
+          <div>
+            <MdSave
+              onClick={() => {
+                dispatch(updateCard(id, values.headerText, values.bodyText));
+                setEditMode(false);
+              }}
+            />
+            <MdCancel onClick={cancelHandler} />
+          </div>
+        );
+      } else {
+        header = <div>{headerText}</div>;
+        actions = <MdEdit onClick={editHandler} />;
+      }
     } else {
       header = <div>{headerText}</div>;
-      actions = <MdEdit onClick={editHandler} />;
     }
     return (
       <div>
@@ -69,14 +77,18 @@ const SingleCard = () => {
 
   const renderBody = (bodyText) => {
     let body;
-    if (isEditMode) {
-      body = (
-        <textarea
-          className="card-body-edit"
-          value={bodyText}
-          onChange={changeHandler("bodyText")}
-        />
-      );
+    if (!isModeOnlyView) {
+      if (isEditMode) {
+        body = (
+          <textarea
+            className="card-body-edit"
+            value={bodyText}
+            onChange={changeHandler("bodyText")}
+          />
+        );
+      } else {
+        body = <div>{bodyText}</div>;
+      }
     } else {
       body = <div>{bodyText}</div>;
     }

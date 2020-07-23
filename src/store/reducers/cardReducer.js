@@ -3,14 +3,15 @@ import {
   ADD_CARD,
   UPDATE_CARD,
   REMOVE_CARDS,
-} from "./actionsTypes";
+  CHANGE_MODE,
+} from "../actionsTypes";
 
 const initialState = {
   cards: [],
   modeOnlyView: false,
 };
 
-const reducer = (state = initialState, action) => {
+const cardReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE_CARDS: {
       return { ...state, cards: action.cards };
@@ -48,10 +49,16 @@ const reducer = (state = initialState, action) => {
         ),
       };
     }
+    case CHANGE_MODE: {
+      return {
+        ...state,
+        modeOnlyView: !state.modeOnlyView,
+      };
+    }
     default: {
       return state;
     }
   }
 };
 
-export default reducer;
+export default cardReducer;
