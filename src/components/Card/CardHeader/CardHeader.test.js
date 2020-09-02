@@ -3,12 +3,14 @@ import CardHeader from "../CardHeader";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
+import configureStore from "redux-mock-store";
+import Checkbox from "../Checkbox";
+import { MdCancel, MdEdit, MdSave } from "react-icons/md";
+import mount from "enzyme/build/mount";
 
 configure({ adapter: new Adapter() });
 
-const mockStore = configureMockStore([thunk]);
+const mockStore = configureStore();
 
 describe("CardHeader", () => {
   let wrapper;
@@ -29,7 +31,7 @@ describe("CardHeader", () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <Provider store={store}>
         <CardHeader {...props} />
       </Provider>
@@ -40,9 +42,15 @@ describe("CardHeader", () => {
     expect(wrapper.find(CardHeader));
   });
 
-  it("should render Save and Cancel action buttons if edit mode = true ", () => {
+  it("should render Save and Cancel action buttons if edit mode = true (isModeOnlyView = false)", () => {
     wrapper.setProps({ isEditMode: true });
-    expect(wrapper.find("MdSave"));
-    expect(wrapper.find("MdCancel"));
+    expect(wrapper.find(MdSave));
+    expect(wrapper.find(MdCancel));
+  });
+
+  it("should render Edit button with Checkbox if edit mode = false (isModeOnlyView = false)", () => {
+    wrapper.setProps({ isEditMode: false });
+    expect(wrapper.find(MdEdit));
+    expect(wrapper.find(Checkbox));
   });
 });
