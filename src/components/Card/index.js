@@ -91,4 +91,5 @@ Card.propTypes = {
   bodyTextTemp: PropTypes.string,
 };
 
+export { Card };
 export default withLoadingDelay(Card);
